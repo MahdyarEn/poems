@@ -56,14 +56,12 @@ const Poem = ({ hemistich1, hemistich2, poet }) => {
 
   return (
     <div className={`${styles.poetry} shadow`}>
-      {console.log(findPoetPictures(poet))}
       <img
         title={poet}
         src={(() => {
           let poetImage;
           try {
             poetImage = require(`../pictures/${findPoetPictures(poet)}`);
-            console.log(poetImage);
           } catch (err) {
             poetImage = noProfile;
           }
@@ -72,8 +70,8 @@ const Poem = ({ hemistich1, hemistich2, poet }) => {
       />
       <div>
         <div>
-          <h2>{hemistich2}</h2>
           <h2>{hemistich1}</h2>
+          <h2>{hemistich2}</h2>
         </div>
       </div>
     </div>

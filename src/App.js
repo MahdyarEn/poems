@@ -130,13 +130,13 @@ const App = () => {
     <div className="container">
       <Header />
       <div className="select-container">
-        <Select placeholder={"حرف اول ..."} className="select-options" classNamePrefix="select" onChange={setSelectedOption} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="color" options={options} />
-        <Select placeholder={"حرف آخر ..."} className="select-options" classNamePrefix="select" onChange={setSelectedOption1} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="color2" options={options} />
-        <Select placeholder={"شاعر ..."} className="select-options" classNamePrefix="select" onChange={setpt} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="color2" options={poetOptions} />
+        <Select placeholder={"حرف اول ..."} className="select-options" classNamePrefix="select" onChange={setSelectedOption} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="first-letter" options={options} />
+        <Select placeholder={"حرف آخر ..."} className="select-options" classNamePrefix="select" onChange={setSelectedOption1} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="first-last" options={options} />
+        <Select placeholder={"شاعر ..."} className="select-options" classNamePrefix="select" onChange={setpt} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="poet" options={poetOptions} />
       </div>
       <input type="text" placeholder="جستجو در متن شعر ..." className="input shadow" onChange={changeHandler}></input>
       {dch()?.map((data) => (
-        <Poem hemistich1={data.hemistich1} hemistich2={data.hemistich2} poet={data.poet}/>
+        <Poem hemistich1={data.hemistich1} hemistich2={data.hemistich2} poet={data.poet} />
       ))}
       {poem.index < check.length ? <button onClick={clickHandler}>More!</button> : undefined}
       it's ok!
