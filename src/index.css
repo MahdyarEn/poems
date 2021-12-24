@@ -203,6 +203,13 @@ i {
   .modal {
     max-width: 500px;
   }
+  .select-options {
+    width: 100%;
+    margin: 11px 0px;
+  }
+  .select-container{
+    display: block!important;
+  }
 }
 @media (min-width: 768px) {
   .container {

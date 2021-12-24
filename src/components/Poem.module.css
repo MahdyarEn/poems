@@ -43,3 +43,17 @@
   -o-border-radius: 20px;
   object-fit: cover;
 }
+
+@media (min-width: 576px) {
+  .poetry img {
+    display: none !important;
+  }
+
+  .poetry > div > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+    text-align: center;
+  }
+}
