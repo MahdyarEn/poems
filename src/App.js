@@ -170,7 +170,7 @@ const App = () => {
           <b>{gitHub.stargazers_count}</b>
         </a>
       ) : (
-        <h1>df</h1>
+        undefined
       )}
     </div>
   );
