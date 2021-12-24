@@ -33,12 +33,12 @@ const App = () => {
   useEffect(() => {
     setPoem({ index: 10 });
   }, [selectedOption]);
+  listAllowed1.current = [];
   selectedOption1?.map((item) => {
-    listAllowed1.current = [];
     listAllowed1.current.push(item.value);
   });
+  listAllowed2.current = [];
   pt?.map((item) => {
-    listAllowed2.current = [];
     listAllowed2.current.push(item.value);
   });
 
@@ -52,7 +52,6 @@ const App = () => {
 
   const dch = () => {
     const arr = [...check];
-    console.log(arr, poem.index, "arr");
     return arr.splice(0, poem.index);
   };
 
@@ -125,7 +124,8 @@ const App = () => {
   const changeHandler = (event) => {
     setInput(event.target.value);
   };
-  console.log(selectedOption);
+  console.log(listAllowed, listAllowed1);
+  console.log(selectedOption, selectedOption1 , "Selected");
   return (
     <div className="container">
       <Header />
