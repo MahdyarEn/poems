@@ -44,7 +44,7 @@
   object-fit: cover;
 }
 
-@media (min-width: 576px) {
+@media (max-width: 576px) {
   .poetry img {
     display: none !important;
   }
