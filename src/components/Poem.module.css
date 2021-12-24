@@ -1,0 +1,44 @@
+.poetry {
+  align-items: center;
+  width: 100%;
+  display: flex;
+  background: var(--content-bg);
+  border-radius: 7px;
+  margin-top: 18px;
+  color: var(--text-color);
+  padding: 0 10px;
+  padding: 16px 0;
+  margin-bottom: 10px;
+}
+.poetry > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.poetry > div > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.poetry div h3 {
+  font-weight: normal;
+  font-size: 16px;
+  padding: 7px;
+}
+
+.poetry div h2 {
+  font-size: 17px;
+}
+
+.poetry img {
+  width: 5rem;
+  height: 5rem;
+  margin: 0px 19px;
+  border-radius: 20px;
+  -webkit-border-radius: 20px;
+  -moz-border-radius: 20px;
+  -ms-border-radius: 20px;
+  -o-border-radius: 20px;
+}

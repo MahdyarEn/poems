@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
 import Header from "./components/Header";
 import Select from "react-select";
-
+import Poem from "./components/Poem";
 // api
 import { getPoems } from "./services/poems";
 
@@ -136,7 +136,7 @@ const App = () => {
       </div>
       <input type="text" placeholder="جستجو در متن شعر ..." className="input shadow" onChange={changeHandler}></input>
       {dch()?.map((data) => (
-        <p>{data.hemistich1}</p>
+        <Poem hemistich1={data.hemistich1} hemistich2={data.hemistich2} poet={data.poet}/>
       ))}
       {poem.index < check.length ? <button onClick={clickHandler}>More!</button> : undefined}
       it's ok!
