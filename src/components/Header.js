@@ -3,8 +3,8 @@ import styles from "./Header.module.css";
 import useLocalStorage from "../hook/useLocalstorage";
 
 // icon
-// import blackIcon from "../icon/black-icon.png";
-// import whiteIcon from "../icon/white-icon.png";
+import blackIcon from "../icon/dark.png";
+import whiteIcon from "../icon/white.png";
 const Header = ({ date }) => {
   const [isFullscreen, setIsFullScreen] = useState(false);
   const [isDark, setIsDark] = useLocalStorage("dark", false);
@@ -12,13 +12,13 @@ const Header = ({ date }) => {
   const favicon = document.getElementById("favicon"); // Accessing favicon element
   const setDark = () => {
     document.body.className = "dark";
-    // favicon.href = blackIcon;
+    favicon.href = blackIcon;
 
     setIsDark(true);
   };
   const setLight = () => {
     document.body.className = "light";
-    // favicon.href = whiteIcon;
+    favicon.href = whiteIcon;
 
     setIsDark(false);
   };

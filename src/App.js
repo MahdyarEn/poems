@@ -1,16 +1,28 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
+
+// import Components
 import Header from "./components/Header";
 import Select from "react-select";
 import Poem from "./components/Poem";
-// api
+
+// Api
 import { getPoems } from "./services/poems";
 
 const App = () => {
+  // States
   const [data, setData] = useState([]);
-  let listAllowed = useRef([]);
-  let listAllowed1 = useRef([]);
-  let listAllowed2 = useRef([]);
+  const [firstLetterOptions, setFirstLetterOptions] = useState(null);
+  const [lastLetterOptions, setLastLetterOptions] = useState(null);
+  const [pt, setpt] = useState(null);
+  const [poem, setPoem] = useState({ index: 10 });
+  const [input, setInput] = useState("");
 
+  // Refs
+  let firstLetterAllowed = useRef([]);
+  let lastLetterAllowed = useRef([]);
+  let poetAllowed = useRef([]);
+
+  // Get poems from API
   useEffect(() => {
     const fetchApi = async () => {
       const poems = await getPoems();
@@ -18,47 +30,49 @@ const App = () => {
     };
     fetchApi();
   }, []);
-  const [poem, setPoem] = useState({
-    end: false,
-    index: 10,
-  });
 
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [selectedOption1, setSelectedOption1] = useState(null);
-  const [pt, setpt] = useState(null);
-  selectedOption?.map((item) => {
-    listAllowed.current = [];
-    listAllowed.current.push(item.value);
-  });
+  // #
   useEffect(() => {
     setPoem({ index: 10 });
-  }, [selectedOption]);
-  listAllowed1.current = [];
-  selectedOption1?.map((item) => {
-    listAllowed1.current.push(item.value);
-  });
-  listAllowed2.current = [];
-  pt?.map((item) => {
-    listAllowed2.current.push(item.value);
+  }, [firstLetterOptions]);
+
+  // firstLetter
+  firstLetterAllowed.current = [];
+  firstLetterOptions?.map((item) => {
+    firstLetterAllowed.current.push(item.value);
   });
 
-  const [input, setInput] = useState("");
+  // LastLetter
+  lastLetterAllowed.current = [];
+  lastLetterOptions?.map((item) => {
+    lastLetterAllowed.current.push(item.value);
+  });
+
+  // PoetLetter
+  poetAllowed.current = [];
+  pt?.map((item) => {
+    poetAllowed.current.push(item.value);
+  });
+
   const check = data.filter((item) => {
-    if (listAllowed.current.some((v) => item.firstLetter.includes(v)) && listAllowed1.current.some((v) => item.lastLetter.includes(v)) && listAllowed2.current.some((v) => item.poet.includes(v)) && (item.hemistich1.includes(input) || item.hemistich2.includes(input))) {
+    if (firstLetterAllowed.current.some((v) => item.firstLetter.includes(v)) && lastLetterAllowed.current.some((v) => item.lastLetter.includes(v)) && poetAllowed.current.some((v) => item.poet.includes(v)) && (item.hemistich1.includes(input) || item.hemistich2.includes(input))) {
       return true;
     }
     return false;
   });
 
-  const dch = () => {
-    const arr = [...check];
-    return arr.splice(0, poem.index);
+  // Limit poems 10 by 10
+  const limitCheck = () => {
+    const array = [...check];
+    return array.splice(0, poem.index);
   };
 
+  // Add poems 10 by 10
   const clickHandler = () => {
     setPoem({ ...poem, index: (poem.index += 10) });
   };
 
+  // Allowed Options for letters
   const options = [
     { value: "", label: "همه" },
     { value: "ا", label: "الف" },
@@ -95,6 +109,8 @@ const App = () => {
     { value: "ی", label: "ی" },
   ];
 
+  // Allowed Options for Poet
+
   const poetOptions = [
     { value: "", label: "همه" },
     { value: "حافظ", label: "حافظ" },
@@ -121,25 +137,23 @@ const App = () => {
     { value: "وحشی بافقی", label: "وحشی بافقی" },
   ];
 
+  // Search Hnadler
   const changeHandler = (event) => {
     setInput(event.target.value);
   };
-  console.log(listAllowed, listAllowed1);
-  console.log(selectedOption, selectedOption1 , "Selected");
   return (
     <div className="container">
       <Header />
       <div className="select-container">
-        <Select placeholder={"حرف اول ..."} className="select-options" classNamePrefix="select" onChange={setSelectedOption} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="first-letter" options={options} />
-        <Select placeholder={"حرف آخر ..."} className="select-options" classNamePrefix="select" onChange={setSelectedOption1} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="first-last" options={options} />
+        <Select placeholder={"حرف اول ..."} className="select-options" classNamePrefix="select" onChange={setFirstLetterOptions} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="first-letter" options={options} />
+        <Select placeholder={"حرف آخر ..."} className="select-options" classNamePrefix="select" onChange={setLastLetterOptions} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="first-last" options={options} />
         <Select placeholder={"شاعر ..."} className="select-options" classNamePrefix="select" onChange={setpt} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="poet" options={poetOptions} />
       </div>
       <input type="text" placeholder="جستجو در متن شعر ..." className="input shadow" onChange={changeHandler}></input>
-      {dch()?.map((data) => (
-        <Poem hemistich1={data.hemistich1} hemistich2={data.hemistich2} poet={data.poet} />
+      {limitCheck()?.map((data, index) => (
+        <Poem key={index} hemistich1={data.hemistich1} hemistich2={data.hemistich2} poet={data.poet} />
       ))}
       {poem.index < check.length ? <button onClick={clickHandler}>More!</button> : undefined}
-      it's ok!
     </div>
   );
 };
