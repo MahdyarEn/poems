@@ -185,6 +185,17 @@ i {
   margin-left: auto;
 }
 
+.btnMore {
+  outline: 0;
+  width: 100%;
+  border: 0;
+  padding: 10px;
+  background: var(--content-bg);
+  border-radius: 7px;
+  cursor: pointer;
+  color: var(--text-color);
+}
+
 @media (min-width: 576px) {
   .container {
     max-width: 540px;
