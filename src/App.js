@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, useMemo } from "react";
-
+import Header from "./components/Header";
 import Select from "react-select";
 
 // api
@@ -10,7 +10,7 @@ const App = () => {
   let listAllowed = useRef([]);
   let listAllowed1 = useRef([]);
   let listAllowed2 = useRef([]);
-  
+
   useEffect(() => {
     const fetchApi = async () => {
       const poems = await getPoems();
@@ -22,10 +22,10 @@ const App = () => {
     end: false,
     index: 10,
   });
-  
+
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOption1, setSelectedOption1] = useState(null);
-  const [pt,setpt] = useState(null)
+  const [pt, setpt] = useState(null);
   selectedOption?.map((item) => {
     listAllowed.current = [];
     listAllowed.current.push(item.value);
@@ -41,9 +41,8 @@ const App = () => {
     listAllowed2.current = [];
     listAllowed2.current.push(item.value);
   });
-  
-  
-  const [input, setInput] = useState('')
+
+  const [input, setInput] = useState("");
   const check = data.filter((item) => {
     if (listAllowed.current.some((v) => item.firstLetter.includes(v)) && listAllowed1.current.some((v) => item.lastLetter.includes(v)) && listAllowed2.current.some((v) => item.poet.includes(v)) && (item.hemistich1.includes(input) || item.hemistich2.includes(input))) {
       return true;
@@ -123,16 +122,19 @@ const App = () => {
     { value: "وحشی بافقی", label: "وحشی بافقی" },
   ];
 
-  const changeHandler = (event) =>{
-    setInput(event.target.value)
-  }
+  const changeHandler = (event) => {
+    setInput(event.target.value);
+  };
   console.log(selectedOption);
   return (
-    <div>
-      <Select className="basic-single" classNamePrefix="select" onChange={setSelectedOption} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={false} isSearchable={true} name="color" options={options} />
-      <Select className="basic-single" classNamePrefix="select" onChange={setSelectedOption1} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={false} isSearchable={true} name="color2" options={options} />
-      <Select className="basic-single" classNamePrefix="select" onChange={setpt} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={false} isSearchable={true} name="color2" options={poetOptions} />
-      <input type="text" onChange={changeHandler}></input>
+    <div className="container">
+      <Header />
+      <div className="select-container">
+        <Select placeholder={"حرف اول ..."} className="select-options" classNamePrefix="select" onChange={setSelectedOption} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="color" options={options} />
+        <Select placeholder={"حرف آخر ..."} className="select-options" classNamePrefix="select" onChange={setSelectedOption1} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="color2" options={options} />
+        <Select placeholder={"شاعر ..."} className="select-options" classNamePrefix="select" onChange={setpt} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="color2" options={poetOptions} />
+      </div>
+      <input type="text" placeholder="جستجو در متن شعر ..." className="input shadow" onChange={changeHandler}></input>
       {dch()?.map((data) => (
         <p>{data.hemistich1}</p>
       ))}
