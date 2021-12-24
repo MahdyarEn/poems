@@ -4,13 +4,15 @@ import React, { useState, useEffect, useRef, useMemo } from "react";
 import Header from "./components/Header";
 import Select from "react-select";
 import Poem from "./components/Poem";
-import Message from "./components/Message"
+import Message from "./components/Message";
 // Api
 import { getPoems } from "./services/poems";
+import { getGithubInfo } from "./services/github";
 
 const App = () => {
   // States
   const [data, setData] = useState([]);
+  const [gitHub, setgSitHub] = useState({});
   const [firstLetterOptions, setFirstLetterOptions] = useState(null);
   const [lastLetterOptions, setLastLetterOptions] = useState(null);
   const [pt, setpt] = useState(null);
@@ -27,6 +29,8 @@ const App = () => {
     const fetchApi = async () => {
       const poems = await getPoems();
       setData(poems);
+      const git = await getGithubInfo();
+      setgSitHub(git);
     };
     fetchApi();
   }, []);
@@ -150,10 +154,24 @@ const App = () => {
         <Select placeholder={"شاعر ..."} className="select-options" classNamePrefix="select" onChange={setpt} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={true} isSearchable={true} name="poet" options={poetOptions} />
       </div>
       <input type="text" placeholder="جستجو در متن شعر ..." className="input shadow" onChange={changeHandler}></input>
-      {limitCheck().length === 0 && poetAllowed.current.length > 0 && lastLetterAllowed.current.length > 0 && firstLetterAllowed.current.length > 0 ? <Message text="متاسفانه شعری  پیدا نشد."/> : limitCheck()?.map((data, index) => (
-        <Poem key={index} hemistich1={data.hemistich1} hemistich2={data.hemistich2} poet={data.poet} />
-      ))}
-      {poem.index < check.length ? <button className="btnMore" onClick={clickHandler}>نمایش بیشتر</button> : undefined}
+      {limitCheck().length === 0 && poetAllowed.current.length > 0 && lastLetterAllowed.current.length > 0 && firstLetterAllowed.current.length > 0 ? (
+        <Message text="متاسفانه شعری  پیدا نشد." />
+      ) : (
+        limitCheck()?.map((data, index) => <Poem key={index} hemistich1={data.hemistich1} hemistich2={data.hemistich2} poet={data.poet} />)
+      )}
+      {poem.index < check.length ? (
+        <button className="btnMore" onClick={clickHandler}>
+          نمایش بیشتر
+        </button>
+      ) : undefined}
+      {Object.keys(gitHub).length > 0 ? (
+        <a className="star" target="_blank" href={gitHub.html_url}>
+          <span>ستاره : </span>
+          <b>{gitHub.stargazers_count}</b>
+        </a>
+      ) : (
+        <h1>df</h1>
+      )}
     </div>
   );
 };
