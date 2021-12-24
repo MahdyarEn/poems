@@ -41,10 +41,11 @@ const App = () => {
     listAllowed2.current = [];
     listAllowed2.current.push(item.value);
   });
-
-
+  
+  
+  const [input, setInput] = useState('')
   const check = data.filter((item) => {
-    if (listAllowed.current.some((v) => item.firstLetter.includes(v)) && listAllowed1.current.some((v) => item.lastLetter.includes(v)) && listAllowed2.current.some((v) => item.poet.includes(v))) {
+    if (listAllowed.current.some((v) => item.firstLetter.includes(v)) && listAllowed1.current.some((v) => item.lastLetter.includes(v)) && listAllowed2.current.some((v) => item.poet.includes(v)) && (item.hemistich1.includes(input) || item.hemistich2.includes(input))) {
       return true;
     }
     return false;
@@ -122,12 +123,16 @@ const App = () => {
     { value: "وحشی بافقی", label: "وحشی بافقی" },
   ];
 
+  const changeHandler = (event) =>{
+    setInput(event.target.value)
+  }
   console.log(selectedOption);
   return (
     <div>
       <Select className="basic-single" classNamePrefix="select" onChange={setSelectedOption} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={false} isSearchable={true} name="color" options={options} />
       <Select className="basic-single" classNamePrefix="select" onChange={setSelectedOption1} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={false} isSearchable={true} name="color2" options={options} />
       <Select className="basic-single" classNamePrefix="select" onChange={setpt} isMulti isDisabled={false} isLoading={false} isClearable={true} isRtl={false} isSearchable={true} name="color2" options={poetOptions} />
+      <input type="text" onChange={changeHandler}></input>
       {dch()?.map((data) => (
         <p>{data.hemistich1}</p>
       ))}
